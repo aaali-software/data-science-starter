@@ -31,7 +31,6 @@ Statistics
 				b. Median - data at 50th percentile
 				    Median = 50th percentile: 50% of points on either side
 
-
 				c. Mode - most common value within data set
 				
 				Other infrequently used measures:
