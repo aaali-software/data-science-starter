@@ -1,3 +1,8 @@
+The following class in pluralsight inspired these notes
+https://app.pluralsight.com/library/courses/finding-relationships-data-python/table-of-contents
+
+Course was found via the following path : Interpreting Data with Python
+https://app.pluralsight.com/paths/skill/interpreting-data-with-python
 
 
 Relationships in Data
