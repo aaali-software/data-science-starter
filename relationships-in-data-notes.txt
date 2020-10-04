@@ -35,6 +35,12 @@ Statistics
 					
 				b. Median - data at 50th percentile
 				    Median = 50th percentile: 50% of points on either side
+				    - the data point at the 50th percentile
+				    - 50% of points fall on either side of the median
+
+				    * Unlike mean, median changes little due to outliers
+
+				    * Median may be better used when outliers are expected within the data
 
 				c. Mode - most common value within data set
 				
@@ -50,7 +56,7 @@ Statistics
 				
 				Variation is important.  "Do the numbers jump around?"
 				
-				a. Range - maxiumum minus minimum
+				a. Range - maximum minus minimum
 					Range = Xmax - Xmin
 						
 						- the range ignores the mean, and is swayed by outliers 
@@ -98,16 +104,47 @@ Statistics
 			- relationships between two variables
 			
 			i. Correlation
+			Similar to Covariance; measures whether greater values of one variable correspond to greater values in the other.
+			- Correlation Coefficient - The correlation between two variables is expressed as the *Correlation Coefficient* - Scaled to always lie between +1 and -1
 				- strength, as well as linear strength between two variables
 				- basically a function of the covariance
 				- standardized
+			- a measure of whether a linear relationship exists between two variables; ranges from +1 (positive linear relationship) to -1 (negative linear relationship). Independent variables exhibit zero correlation
 				
 			ii. Covariance
-				- join variability of two random variables
+			    Measures relationships between two variables, specifically whether greater values of one variable correspond to greater values in the other.
+			   	- join variability of two random variables
 				- if greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, the covariance is positive.
-				- not standardized 
+				- not standardized
+
+				Intuition
+				    Positive Covariance
+				    - Let's say you have two variables, X and Y, and these variables are each distributed across their mean.
+				    - To say X and Y have positive covariance, it would be found that their mean deviations are in sync.
+				        - The deviations around the means of the two series are in-sync.
+
+			        Negative Covariance
+			        - The deviations around the means of the two series are out-of-sync
+
+            iii. Correlation and Covariance
+                a. the correlation coefficient is derived from the covariance.
+                b. the correlation is a standardization of the covariance
+                c. standardization formula:
+                    Correlation(x,y) = Covariance(x,y) / [sqrRoot(variance(x)) * sqrRoot(variance(y))]
+
+                d. Correlated Random Variables - Correlation captures Linear Relationships
+                    If we were to plot randomly correlated values on a plane, we would see a definite linear relationship.
+                    - Correlation = +1
+                        - if the correlation = +1, they are perfectly positively correlated
+                        - As X increases, Y decreases linearly
+                    - Correlation = -1
+                        - if the correlation is -1, they are perfectly negatively correlated
+                        - As X increases, Y decreases linearly
+                    - Correlation = 0
+                        - Changes in X independent* of changes in Y
+                        - Independent variables have zero covariance and zero correlation
 			
-		c. Multivariate 
+		C. Multivariate
 			- relationships between multiple variables
 			
 			i. Correlation Matrix
