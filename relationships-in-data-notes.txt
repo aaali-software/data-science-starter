@@ -1,0 +1,122 @@
+
+
+Relationships in Data
+
+Identifying and Visualizing
+Statistics in Data
+A branch of mathematics that deals with collecting, organizing, and interpreting data
+
+Statistics
+	1. Descriptive Statistics
+		A. Univariate 
+			- single variable
+			i. Measures of Frequency
+				- Frequency tables
+					- how often a particular category or value appears in data set
+				- Histograms
+					- bin continuous data and see how many data points fall within a certain bin
+			
+			ii. Measures of Central Tendency
+			- a central or a typical value for a probability distribution
+			- data set can be visualized as points on a number line 
+				a. Average (Mean)
+					- serves as headline for data set
+					- one number that best represents all of these data points
+					- calculate by taking the sum of all the points on the number line and divide by the number of points
+						
+						xbar or avg = sum(x1 + x2 + ... + xn) / n
+						
+					- gives idea around some central point in data
+					
+				b. Median - data at 50th percentile
+				    Median = 50th percentile: 50% of points on either side
+
+
+				c. Mode - most common value within data set
+				
+				Other infrequently used measures:
+					- Geometric Mean
+						- typically used in business, finance
+						- calculate growth rates and returns on a portfolios of securities
+					- Harmonic Mean 
+						- average travel speed given the duration of several trips
+			
+			iii. Measures of Dispersion
+				- capture how does data jump around
+				
+				Variation is important.  "Do the numbers jump around?"
+				
+				a. Range - maxiumum minus minimum
+					Range = Xmax - Xmin
+						
+						- the range ignores the mean, and is swayed by outliers 
+							- that's where variance comes in
+						
+					Because range is so sensitive to the presence of outliers in data, it is not often used to measure variation.
+						
+				b. Inter-quartile range (IQR) - range between 75th percentile [Q3] minus 25th percentile [Q1]
+					- helps pinpoint outliers
+					- [Q3] = 75th percentile: 75% of points smaller than this
+					- [Q1] = 25th percentile: 25% of points smaller than this
+					
+					Inter-quartile Range (IQR) = 75th percentile - 25th percentile
+					
+				c. Standard deviation and Variance
+					
+					When summarizing a set of data points:
+						*Variance is the second-most important number
+						
+					- Variance of data is a measurement of dispersion.
+					To calculate Variance, first need to calculate mean deviation.
+					
+					Mean Deviation: mean value subtracted from all data points.
+					
+					- Mean Deviation = xi - xbar
+						
+					- Squared Mean Deviation = (xi - xbar)^2
+						
+					Variance = sum(xi - xbar)^2 / n
+					
+						*Bessel's Correction:
+							BC's Variance = sum(xi - xbar)^2 / (n - 1)
+							- During calculation, we can improve our estimate of the variance by tweaking the denominator 
+					
+					Standard Deviation = sqrRoot(Variance) = sqrRoot(sum(xi - xbar)^2 / n)	
+					
+						- can tell us how far a particular data point falls from the mean.
+						- outliers might represent data errors, or genuinely rare points legitimately in a dataset.
+							- Data points may be expresssed as one standard deviation away from the mean, two standard deviations away from mean, or three, etc.
+							- outliers may represent data errors or genuinely rare points
+								- outlier is considered some point more than three stadard deviations away from the mean.
+							
+					
+		B. Bivariate 
+			- relationships between two variables
+			
+			i. Correlation
+				- strength, as well as linear strength between two variables
+				- basically a function of the covariance
+				- standardized
+				
+			ii. Covariance
+				- join variability of two random variables
+				- if greater values of one variable mainly correspond with the greater values of the other variable, and the same holds for the lesser values, the covariance is positive.
+				- not standardized 
+			
+		c. Multivariate 
+			- relationships between multiple variables
+			
+			i. Correlation Matrix
+				- provides correlation values for each point in your data
+				
+			ii. Covariance Matrix
+				- provides covariance data for each point in your data
+		
+	2. Inferential Statistics
+		A. Hypothesis
+			- Asks "are the assumptions held about data are true or not?"
+		
+		B. Model Fitting 
+			- a part of predictive analytics
+			- use insights extracted from data to make predictions or decisions
+			- Machine Learning techniques are a part of this
