@@ -1,0 +1,196 @@
+
+
+Site Reliability Engineering (SRE)
+
+a way of managing production systems that solves the conflict between traditional dev and ops teams without all the cultural upheaval that we get with devops.
+
+becoming increasingly popular because it provides a clear set of guildelines for implementation and result is an organization with reliable systems and high change velocity.
+
+
+What is SRE?
+
+	- an approach to operations which usses software as the primary tol for managing systems
+	- sre has engineering capabailities which it puts to use into automating the management of the system or even improving the system itself.
+	
+	Eg. Organization has two teams: SRE and Product Development
+		
+		SRE Team:
+		- administration tasks
+			- automate as much as possible
+		- own monitoring on systems & reporting on failures
+		- responding to and dealing with these failures as they occur
+		
+		Development Team:
+		- design
+		- build
+		- test
+		
+	Teams are jointly responsible for product, and can and will cross over.
+	
+	- If system is in poor state, and lots of support tickets, dev team can pickup issues
+	- if system is in poor state because design isn't suitable, then SRE may work on design to build more scalable architecture
+	
+	- SRE's need a good understanding of the system being built
+	- Dev's gain experience how the system works in production 
+	
+	- SRE similar to Ops, but the functions to execute are different
+	
+	- Eliminating Toil
+		- Automating manual, repititive work
+		- do this as much as possible with goal of improving the system overall
+		- Toil is very low value work to be fixed, but often take up much of the time of the Ops teams.
+		- Toil is often worked to patch up problems in the system and its a better use of time to fix the problem properly
+	- Managing Risk
+		- Agreed service levels with explicit tolerance
+		- Risk Management is all about embracing change
+		- encourage frequent, small releases from dev team which are less risky to deploy than big quarterly releases
+		- Regular releases also support automated rollout and rollback processes. 
+		- Changing systems brings risks even with automated process and SRE's addresses that explicitly using Service Level's with a built-in degree of tolerance and with a framework in place to reduce risk if the system goes out of tolerance
+	- Handling Failure
+		- Establish Incident management processes and post-mortems
+		- makes reasonable use of SRE time
+		- acknowledging of failures will happen
+		- SRE views failure as an opportunity to improve the system
+			- incidents always followed by blame free post-mortem to get to the root cause of the issues
+			- put procedures or software tools in place to prevent failure from reoccuring
+			
+Background
+	- SRE founding in Google when someone with Engineering background was run a Proudction/Operations team, and that is still how their sytems are run today
+	- SRE predates DevOps movement	
+		- How Google runs production systems
+			- Engineering approach to ops, 2003
+			- Site Reliability Engineering, 2016 **big-brain book
+			- The Site Reliability Workbook, 2018 **followup big-brain book 
+		
+Comparing Traditional Ops and SRE
+	Three Parties:
+		"The Business" 
+			- want the systems	
+			- message to ops: 
+				- i want my systems to be reliable or we'll lose business
+			- message to devs:
+				- i want new and exciting features in systems because if we don't keep improving we'll lose business
+				- problem! -- making a new change wtihin system to introduce a new feature is when we are most to break it and reduce reliability
+				- google's own internal research found 70% incidents in prod systems happen due to deployments of new software versions or configuration settings
+		
+		Ops Team 
+			- run systems
+			- reluctant to deploy as they know it might cause an outage
+		
+		Development Team 
+			- build systems
+			- want to deploy
+			
+	This uneasy tension between three parties puts a drag on the whole workflow/process
+	
+	Timeline for software lifecycle, either Agile or Waterfall:
+		1 Design
+		2 Development			Closer to Dev team: they own the first four aka build stage
+		3 Testing 						
+		4 Acceptance
+							Once business accepts, the devs hand app to Ops team which is the only real interaction between the two.	
+								
+		5 Delivery				Closer to Ops team: they own the latter four, support, maintenance and capacity planning
+		6 Support				
+		7 Maintenance
+		8 Capacity
+		
+	Clear delineation of responsibility here, which keeps teams apart despite certain area of delivery, where dev team hands over to ops, which is mostly the only form of real communication/collaboration.
+	Either way, only invovles subset of each team to handle deployment, which is good for keeping tasks and roles seperate, but brings in a variety of problems.
+	
+	- Different goals
+	- Different skillsets
+	- Different tools
+	- No common ground
+	
+	Ops Team:
+	
+		Black Box Delivery
+			- No design input
+			- Automation options limited
+			- Infrasturcture-level monitoring
+				- the team actually running the software have no input in how its dessigned or delivered until it happens
+				- the architecture may not be suitable for the level of scale which the ops team needs to support
+				- deliveray artifacts may not be suitable for automation:
+					- if ops team wants to run within docker containers, it doesn't help if the dev team gives them windows installer files
+				- because Ops hasn't been involved in the build stage, its common to see poor or useless high-level monitoring on these apps that make it to production
+					- response latency, status codes
+					- ops team becomes limited to basic monitoring of the infrasturcture level
+					- only so much to be learned from CPU utilization and memory usage
+					
+		Limited Agency
+			- Post-acceptance
+			- GO/NO GO decision
+			- Conflict guaranteed 
+
+				- Ops have no say in this matter - it is decided that delivery will happen once the business accepts the work from the dev team.
+				- Ops team have limited options when going live - may be blunt "choices" in a GO/NO GO decision
+					- if they give a NO GO, this sets up conflict with dev team & business 
+		
+		After-the-event
+			- Mandated service levels
+			- Reactive support
+				- Ops often given a delivery and told to run at a particular service level:
+					- need to get into prod ASAP
+					- keep it running!
+					- if problems, every fix is reactive.
+						- whole team can get swamped in process
+						- looking at tickets, running a round, help me!!!
+						- little chance to recover/improve systems to avoid repeat
+						
+	
+	SRE Team: 
+	
+		1 Design *
+		2 Development *			
+		3 Testing 						
+		4 Acceptance *
+							
+								
+		5 Delivery*		
+		6 Support*			
+		7 Maintenance
+		8 Capacity*
+	
+	- much more interaction between SRE + scrum team
+		- Design
+		- Development
+		- Acceptance
+		- Delivery
+		- Support
+		- Capacity
+	
+	- Dev team nominally own Build phase, but use SRE when they can
+	- SRE nominally own the Run phase but use Dev team when they can.
+	- Now, we get two teams that function as one team that has a lot more interaction between its members, that function as one, with shared goals and overlapping skillsets
+		- Shared goal
+		- Overlapping skillsets
+			- SRE's have dev skills and devs are experiencing production
+		- Consistent tools
+			- core tool set used by both teams
+		- Common basis
+			- now have common basis for teams to work together.  Involving SRE as easy as build stage makes it much easier to run the system.
+			
+			
+	SRE Team - 
+	
+		Agreed Delivery
+			- Ongoing design input
+			- Extended automation options
+			- User-focused monitoring (useful reports)
+				- Statistical monitoring vs cpu usage
+				- can work with devs to implement that specific level of monitoring or add to the codebase themselves
+		
+		Full Agency - SRE has ultimate control over its own work
+			- Dev team support
+				- if prod support is taking too much time, devs come to help rather than work on new features
+			- Stop deployments
+				- if system has series of failures in given period, SRE team has power to stop any further releases to keep system stable
+			- Hand back the pager
+				- if system is not really production ready, SRE team can withdraw support, handing back the pager to dev team to mange the system themselves
+		
+		Key focus here is that even after the application is handed over from the devs, there is still cooperation, teamwork, interaction with both teams (SRE + Devs) 
+			- handover to SRE might still mean most of team might work with the system after its been delivered, but they're doing that with an agreed service-level and aa formal limit to the amount of time fixing issues.
+			
+			
+			
