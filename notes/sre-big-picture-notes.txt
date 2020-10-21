@@ -40,12 +40,14 @@ What is SRE?
 		- do this as much as possible with goal of improving the system overall
 		- Toil is very low value work to be fixed, but often take up much of the time of the Ops teams.
 		- Toil is often worked to patch up problems in the system and its a better use of time to fix the problem properly
-	- Managing Risk
+
+	- Managing Risk - Working towards Service Levels
 		- Agreed service levels with explicit tolerance
 		- Risk Management is all about embracing change
 		- encourage frequent, small releases from dev team which are less risky to deploy than big quarterly releases
 		- Regular releases also support automated rollout and rollback processes. 
 		- Changing systems brings risks even with automated process and SRE's addresses that explicitly using Service Level's with a built-in degree of tolerance and with a framework in place to reduce risk if the system goes out of tolerance
+
 	- Handling Failure
 		- Establish Incident management processes and post-mortems
 		- makes reasonable use of SRE time
@@ -192,5 +194,200 @@ Comparing Traditional Ops and SRE
 		Key focus here is that even after the application is handed over from the devs, there is still cooperation, teamwork, interaction with both teams (SRE + Devs) 
 			- handover to SRE might still mean most of team might work with the system after its been delivered, but they're doing that with an agreed service-level and aa formal limit to the amount of time fixing issues.
 			
-			
-			
+
+
+Comparing DevOps and SRE
+
+    The Business
+        Gimme reliability and new stuff
+    DevOps
+        "ok"
+
+    Benefits of DevOps:
+        the productivity of a small, capable, and empowered team can be amazing.
+
+        The problem with DevOps is, it can be really hard to get there.
+
+        Moving to DevOps is often done as a large, digital, transformation program which has extended periods where teams are transitioning to DevOps, so what the business gets is actually a lot of frustrating responses.
+
+        Automation is needed to support regular, reliable releases.  However, projects with no automation require a lot of investment to build that out, and you can build new features while that is taking up time.
+
+        Monitoring and feedback are core to DevOps as well, and older applications won't have any useful metrics.  Building that into the apps is crucial but it takes time away from delivering actual business value.
+
+
+        If transformation process for a team to a genuine DevOps model is successful, then the DevOps team will have ownership all the major delivery functions, but they're owned by a single team.
+
+            1 Design
+		    2 Development
+		    3 Testing
+		    4 Acceptance
+    		5 Delivery
+	    	6 Support
+		    7 Maintenance
+		    8 Capacity
+
+	    This team has all the same benefits of an SRE.
+	        - One, shared goal
+    	    - Overlapping skillsets
+	        - Consistent tools
+	        - Common basis/ground for everyone to work from
+
+    	The positives are all the same, and the combined teams own all the functions.
+
+	    However, keeping SRE separate helps keep things more aligned to the current implementation, and that makes the migration much easier for the enterprise.
+
+    Overall, DevOps and SRE have much in Common:
+        - Focus  on quality & velocity
+        - Automation & tooling
+        - Removing silos
+
+    But DevOps...
+        - has a broader remit
+        - significant cultural change
+
+    And SRE...
+        - is more prescriptive
+        - feasible internal migration
+
+
+    Moving to DevOps is fundamentally about creating a single DevOps team from existing Development and Operations Teams.
+        - Significant investment
+        - Acceptance of change
+        - Path can vary from company to company
+        - Often needs outside help
+        - Uneven rollout
+            - some teams may gracefully accept, while other teams are more sluggish -- this can be normal, and due to varying reasons!
+
+    Migrating to SRE removes a lot of those barriers, as SRE maintains the conceptual separation between DEV and OPS, even though Ops means something different in SRE, and Dev and SRE teams are more closer, Ops is still a separate function, and therefore is much easier to map onto the existing organization structure
+
+    Another difficulty which DevOps struggles to address is the complexity of modern systems.
+
+        A new micro-service application may be setup like this: written in Java Spring Boot, interacting with other microservices, an Angular UI, SQL JDBC Database, packaged in Docker, running on PCF, deployed to a Jenkins pipeline, Zuul to handle the network traffic, with BASH scripts to automate all the build + deployment steps, etc.
+
+        Its a lot to ask for one team to be experts on all of these technologies, and therefore silo generation is commonplace.
+
+        The team as a whole may have the expertise in all the technologies, not to mention the cloud services and data-service setup, but within the team the silos still exist.
+
+   The picture is different with SRE.  Both teams don't need to have the same level of expertise along the same level of technology stack.
+
+   Expertise can be split between the teams, allowing individuals to focus on their roles more effectively.
+
+
+
+Exploring the Key Tenets of SRE
+
+    Eliminating Toil
+        - Toil is the sort of mundane, repetitive work that tends to pile up and usually falls to Ops; it doesn't add much value or improve the system.
+            - The amount of work scales as the System scales
+
+        - e.g. a Logging System which generates too many log entries and risks filling up the disk memory.
+               - faced with this problem, an Ops team member may log into the System and clear / delete old log files.
+               - boring, repetitive, necessary.
+               - new release; logs fill disk daily
+               - script to delete old log files; log in and run daily
+               - scale up to 50 servers
+               - CRON job to run script daily * possible end of Ops scenario
+
+              *- SRE works with dev team to reduce logs
+
+               The problem isn't really fixed -- No real improvement to the system and still potentially a lot of work here to manage.
+               - now we have 50 CRON tasks to manage, and 50 copies of the same script to keep in sync
+
+        SRE might take a similar approach, but final stage isn't just to be happy with multiple CRONs, its to go back to Dev team or codebase to change system to only send useful LOGs.
+
+        - This improves the system as the LOG outputs only what we actually need and it successfully eliminates the toil.
+
+    Working to + Maintaining Service Levels
+
+        - eg. Given a system that is working well
+            - new release; bugs cause latency
+            - increase capacity; report issues to dev team
+            - new release; config issue causes outage
+            - fix config and restore service
+
+           *- SRE can bloc knew releases for agreed period
+
+            In Ops world, this is the end of the story.  We had some hiccups, two losses of service in short time frame, but we can blame them both on the Dev team, so its ok if we don't meet our target
+
+            In SRE, that's different: Service Levels have an agreed upon level of tolerance over a given period.  If all that tolerance is used up, than an SRE can block releases for the rest of that given period.
+            So we have the same amount of outage, but with no more releases we're much less likely to have any more outages for a given period.  So we have used up our tolerance, but we still meet our agreed upon Service Level.
+
+
+    Managing Failure
+
+        - e.g. DNS change causes outage
+            - fix DNS issue
+
+           *- SRE mandates a post-mortem into root cause
+
+            In traditional Ops, that could be the end after applying the DNS config fix -- which, even though the System is up again, nothing has been learned from the failure.
+
+            SRE mandates a post-mortem after every failure, which is a blameless process -- this aims at finding the root cause of the issue rather than finding out who to fire.
+
+            In this case, it could be that the DNS configuration was being edited manually through a web-portal, which is always prone to being error-prone.
+            The SRE approach would switch to using the API for the DNS provider, and build a tool which validates any new configuration before applying it.
+                - The post-mortem and building the new tool take time, but they improve the System.  DNS issues shouldn't happen again, and the organization has a new, secure process for handling DNS changes, which other teams may also use.
+
+        Adding engineering skills to the Ops team brings a very different approach to problems, which tends towards long-term improvements over short-term fixes.
+
+
+Understanding Why SRE Works
+
+    Accepts the conflict between Dev and Ops and addresses it explicitly.
+
+    Conflict between dev and ops
+        - made explicit
+        - contracted service level
+        - business buy-in
+            - agree that a small degree of failure is acceptable
+            - dev teams given room to deploy changes
+            - SRE has the authority to stop deployments if quality dips
+
+    Integration between dev and ops
+        - Shared responsibility
+        - Shared workload
+        - Common toolkit
+            - as Devs and SRE work more closely together, the lines between teams become blurred as collaboration increases.
+
+    Prescriptive Practices
+        - On-call teams and targets
+        - %age SRE  time on toil
+        - Service level framework
+
+    IT-led Migration
+        - Within existing org chart
+        - Maintain product knowledge
+        - Start small
+
+    SRE Empowerment - SRE structure could feel more rewarding to Ops members
+        - Improving systems
+        - Formal structure
+        - Tools to meet responsibilities
+        - less finger-blaming between Ops and Devs, less stress within the work environment and easier problem solving
+
+    SRE as an attractive role
+        - Reduce mundane work
+        - Expand skills
+        - Career development
+
+
+Module Summary and the Growth of an SRE
+
+    "It's what a happens when you ask a software engineer to design an operations function."
+        - Ben Treynor Sloss, VP Engineering, Founder of Google SRE
+            - Michael Scott
+
+    SRE is an approach to IT operations
+    - Maintains a dev/ops split
+    - But adds engineering to "ops"
+
+    Shares goals with DevOps
+    - Breaking down silos
+    - increased quality and velocity
+
+    Growing adoption
+    - growing number of job roles and adoption across organizations
+    - Sympathetic migration
+
+
+
