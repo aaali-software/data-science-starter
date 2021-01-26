@@ -391,3 +391,46 @@ Module Summary and the Growth of an SRE
 
 
 
+Service Levels, Monitoring, and Alerting
+
+	Understanding Service Level Objectives and Error Budgets
+	
+	Defining Service Level Indicators and Service Level Objectives
+
+	Monitoring Servce Level Indicators
+		Four Golden Signals
+
+			Latency
+				- Job processing time
+				- Response generation time
+
+			Traffic
+				- Length of message queue
+				- Requests per second
+
+			Errors
+				- Request failures
+				- Response correctness
+
+			Saturation
+				- CPU & memory utilization
+				- Network bandwidth
+			
+			These four signals will provide a good overall view of your system health, and if we can also track them for any service our apps depend on, then we have a great starting point for monitoring.
+
+		Implementing SLIs
+
+			With that said, our own SLIs are the real measure we need to capture because they'll drive alerts when we're faling to meet SLOs.  The more useful the data is, the more effort it will take.
+			
+			Example:
+			Given a web application, we might have a user-focused SLO that says the home page should return in under half a second for over 95% of requests. There are lots of ways to write an SLI to measure this:
+			Server logs:
+				- Server Logs: scrape the logs that we already collect to report the response duration, or how long it takes the server to generate and respond to the request. However, this is not the same time period the user sees.  There will be load balanacing, CDNs, and the whole internet before they get a response from the server.
+				
+				- Synthetic Testing: External services, generate fake user requests from outside our infrastructure and records the end-to-end response times.  Pingdom/StatusCake are services that do this.  However, the synthetic response doesn't include rendering time in the browser, which could be significant if your home page loads data asynchronously from other services with Javascript.
+				
+				- Javascript Monitoring: include monitoring within Javascript, recording network load time, browser rendering.  However, this might need custom engineering effort.  Or, could use a service like Google Analytics, which records page latency together with traffic. 
+				
+			As it is shown in these examples, the choice of an SLI implementation is going to be a balance between how good the data is and how expensive it is to collect the data.  If starting from nothing, best guidance is to start simple and improve over time.
+				
+			
